@@ -1,9 +1,6 @@
-﻿using NAudio.Wave;
-using Silk.NET.OpenAL;
+﻿using Silk.NET.OpenAL;
 using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 
 namespace AudioLibrary.NET.OpenAL
 {
@@ -13,6 +10,16 @@ namespace AudioLibrary.NET.OpenAL
         public static ALContext ALC => SoundDeviceOpenAL.ALC;
 
         internal readonly uint Soruce;
+
+
+        public bool Playing
+        {
+            get
+            {
+                AL.GetSourceProperty(Soruce, GetSourceInteger.BuffersProcessed, out int processed);
+                return processed == 0;
+            }
+        }
 
         public bool Looping
         {
@@ -58,6 +65,19 @@ namespace AudioLibrary.NET.OpenAL
             }
         }
 
+        public double Time
+        {
+            get
+            {
+                AL.GetSourceProperty(Soruce, SourceFloat.SecOffset, out float value);
+                return value;
+            }
+            set
+            {
+                AL.SetSourceProperty(Soruce, SourceFloat.SecOffset, (float)value);
+            }
+        }
+
         public unsafe SoundInstanceOpenAL()
         {
             Soruce = AL.GenSource();
@@ -65,8 +85,6 @@ namespace AudioLibrary.NET.OpenAL
 
             Looping = false;
             Pitch = 1.0f;
-            Gain = 0.5f;
-            Pan = 0.5f;
         }
 
         public unsafe SoundInstanceOpenAL(uint buffer) : this()
@@ -77,6 +95,11 @@ namespace AudioLibrary.NET.OpenAL
         public void Play()
         {
             AL.SourcePlay(Soruce);
+        }
+
+        public void Stop()
+        {
+            AL.SourceStop(Soruce);
         }
 
         public void Dispose()

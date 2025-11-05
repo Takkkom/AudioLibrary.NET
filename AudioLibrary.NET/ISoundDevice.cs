@@ -8,5 +8,6 @@ namespace AudioLibrary.NET
     public interface ISoundDevice : IDisposable
     {
         ISound CreateSound(WaveStream waveStream);
+        ISoundStream CreateSoundStream(WaveStream waveStream);
     }
 }

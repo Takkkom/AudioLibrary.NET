@@ -37,5 +37,10 @@ namespace AudioLibrary.NET.OpenAL
         {
             return new SoundOpenAL(waveStream);
         }
+
+        public ISoundStream CreateSoundStream(WaveStream waveStream)
+        {
+            return new SoundStreamOpenAL(waveStream);
+        }
     }
 }

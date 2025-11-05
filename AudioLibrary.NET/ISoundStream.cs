@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Text;
 
 namespace AudioLibrary.NET
 {
-    public interface ISoundInstance : ISoundParams, IDisposable
+    public interface ISoundStream : ISoundParams, IDisposable
     {
         void Play();
         void Stop();
