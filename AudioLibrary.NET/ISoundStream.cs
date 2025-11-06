@@ -4,9 +4,7 @@ using System.Text;
 
 namespace AudioLibrary.NET
 {
-    public interface ISoundStream : ISoundParams, IDisposable
+    public interface ISoundStream : ISoundInstance, IDisposable
     {
-        void Play();
-        void Stop();
     }
 }
