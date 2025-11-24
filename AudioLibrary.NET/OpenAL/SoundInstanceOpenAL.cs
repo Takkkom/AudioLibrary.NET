@@ -60,7 +60,7 @@ namespace AudioLibrary.NET.OpenAL
             }
             set
             {
-                float z = MathF.Sqrt(1 - value * value);
+                float z = (float)Math.Sqrt(1 - value * value);
                 AL.SetSourceProperty(Soruce, SourceVector3.Position, value, 0.0f, z);
             }
         }

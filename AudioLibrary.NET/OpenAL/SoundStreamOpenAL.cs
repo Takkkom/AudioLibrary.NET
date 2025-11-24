@@ -61,7 +61,7 @@ namespace AudioLibrary.NET.OpenAL
             set
             {
                 long pos = (long)(value * secondLength);
-                pos = Math.Clamp(pos, 0, stream.Length);
+                pos = Math.Min(pos, stream.Length);
                 stream.Seek(pos, SeekOrigin.Begin);
 
                 forceUpdate = true;
@@ -125,7 +125,7 @@ namespace AudioLibrary.NET.OpenAL
             baseStreamTime = stream.CurrentTime.TotalSeconds;
 
             byte[] bytes = new byte[Math.Min(bufferSize, stream.Length)];
-            stream.Read(bytes);
+            stream.Read(bytes, 0, bytes.Length);
 
             if (stream.WaveFormat.BitsPerSample == 24)
             {

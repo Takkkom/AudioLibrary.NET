@@ -10,15 +10,15 @@ namespace AudioLibrary.NET
 {
     public static class AudioFile
     {
-        public static WaveStream? GetWaveStream(Stream stream)
+        public static WaveStream GetWaveStream(Stream stream)
         {
             byte[] buffer = new byte[4];
-            stream.Read(buffer);
+            stream.Read(buffer, 0, buffer.Length);
             string head = Encoding.UTF8.GetString(buffer);
 
             stream.Position = 8;
             byte[] buffer2 = new byte[4];
-            stream.Read(buffer2);
+            stream.Read(buffer2, 0, buffer2.Length);
             string sub = Encoding.UTF8.GetString(buffer2);
 
             stream.Position = 0;
@@ -42,7 +42,7 @@ namespace AudioLibrary.NET
                 default:
                     {
                         byte[] buffer3 = new byte[3];
-                        stream.Read(buffer3);
+                        stream.Read(buffer3, 0, buffer3.Length);
                         string sub2 = Encoding.UTF8.GetString(buffer3);
                         stream.Position = 0;
 

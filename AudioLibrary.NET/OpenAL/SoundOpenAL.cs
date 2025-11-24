@@ -20,7 +20,7 @@ namespace AudioLibrary.NET.OpenAL
             buffer = AL.GenBuffer();
 
             byte[] bytes = new byte[waveStream.Length];
-            waveStream.Read(bytes);
+            waveStream.Read(bytes, 0, bytes.Length);
 
             BufferFormat bufferFormat = ALUtil.GetBufferFormat(waveStream);
 
