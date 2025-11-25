@@ -14,6 +14,8 @@ namespace AudioLibrary.NET.OpenAL
         public static AL AL => SoundDeviceOpenAL.AL;
         public static ALContext ALC => SoundDeviceOpenAL.ALC;
 
+        public ISound Sound { get; private set; }
+
         private readonly int secondLength;
         private readonly int bufferSize;
 

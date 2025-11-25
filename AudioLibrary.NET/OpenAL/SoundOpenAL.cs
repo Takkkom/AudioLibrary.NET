@@ -13,11 +13,14 @@ namespace AudioLibrary.NET.OpenAL
         public static AL AL => SoundDeviceOpenAL.AL;
         public static ALContext ALC => SoundDeviceOpenAL.ALC;
 
-        private readonly uint buffer;
+        public double Length { get; private set; }
+
+        public readonly uint Buffer;
 
         public unsafe SoundOpenAL(WaveStream waveStream)
         {
-            buffer = AL.GenBuffer();
+            Length = waveStream.TotalTime.TotalSeconds;
+            Buffer = AL.GenBuffer();
 
             byte[] bytes = new byte[waveStream.Length];
             waveStream.Read(bytes, 0, bytes.Length);
@@ -31,18 +34,18 @@ namespace AudioLibrary.NET.OpenAL
 
             fixed (void* data = bytes)
             {
-                AL.BufferData(buffer, bufferFormat, data, bytes.Length, waveStream.WaveFormat.SampleRate);
+                AL.BufferData(Buffer, bufferFormat, data, bytes.Length, waveStream.WaveFormat.SampleRate);
             }
         }
 
         public void Dispose()
         {
-            AL.DeleteBuffer(buffer);
+            AL.DeleteBuffer(Buffer);
         }
 
         public ISoundInstance CreateInstance()
         {
-            return new SoundInstanceOpenAL(buffer);
+            return new SoundInstanceOpenAL(this);
         }
     }
 }

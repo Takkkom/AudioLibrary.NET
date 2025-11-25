@@ -9,6 +9,8 @@ namespace AudioLibrary.NET.OpenAL
         public static AL AL => SoundDeviceOpenAL.AL;
         public static ALContext ALC => SoundDeviceOpenAL.ALC;
 
+        public ISound Sound { get; private set; }
+
         internal readonly uint Soruce;
 
 
@@ -17,7 +19,7 @@ namespace AudioLibrary.NET.OpenAL
             get
             {
                 AL.GetSourceProperty(Soruce, GetSourceInteger.BuffersProcessed, out int processed);
-                return processed == 0;
+                return processed == 0 && Time > 0 && Time < Sound.Length;
             }
         }
 
@@ -87,9 +89,10 @@ namespace AudioLibrary.NET.OpenAL
             Pitch = 1.0f;
         }
 
-        public unsafe SoundInstanceOpenAL(uint buffer) : this()
+        public unsafe SoundInstanceOpenAL(SoundOpenAL sound) : this()
         {
-            AL.SetSourceProperty(Soruce, SourceInteger.Buffer, buffer);
+            Sound = sound;
+            AL.SetSourceProperty(Soruce, SourceInteger.Buffer, sound.Buffer);
         }
 
         public void Play()

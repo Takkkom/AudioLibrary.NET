@@ -7,6 +7,8 @@ namespace AudioLibrary.NET
 {
     public interface ISoundInstance : ISoundParams, IDisposable
     {
+        ISound Sound { get; }
+
         void Play();
         void Stop();
     }

@@ -6,6 +6,7 @@ namespace AudioLibrary.NET
 {
     public interface ISound : IDisposable
     {
+        double Length { get; }
         ISoundInstance CreateInstance();
     }
 }
